@@ -1,0 +1,74 @@
+service: user-service
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs16.x
+  versionFunctions: false
+  stage: "dev"
+  region: eu-west-1
+  httpApi:
+    cors: true
+
+functions:
+  signup:
+    handler: app/handler.Signup
+    events:
+      - httpApi:
+          path: /signup
+          method: post
+  login:
+    handler: app/handler.Login
+    events:
+      - httpApi:
+          path: /login
+          method: post
+  verify:
+    handler: app/handler.Verify
+    events:
+      - httpApi:
+          path: /verify
+          method: post
+      - httpApi:
+          path: /verify
+          method: get
+  profile:
+    handler: app/handler.Profile
+    events:
+      - httpApi:
+          path: /user
+          method: post
+      - httpApi:
+          path: /user
+          method: put
+      - httpApi:
+          path: /user
+          method: get
+  cart:
+    handler: app/handler.Cart
+    events:
+      - httpApi:
+          path: /cart
+          method: post
+      - httpApi:
+          path: /cart
+          method: get
+      - httpApi:
+          path: /cart
+          method: put
+  payment:
+    handler: app/handler.Payment
+    events:
+      - httpApi:
+          path: /payment
+          method: post
+      - httpApi:
+          path: /payment
+          method: get
+      - httpApi:
+          path: /payment
+          method: put
+
+plugins:
+  - serverless-offline
+  - serverless-plugin-typescript
